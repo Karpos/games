@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		
+	</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script type="text/javascript" src="../jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<style type="text/css">
+			#input-info{
+				margin-top: 10%;
+			}
+		</style>
+</head>
+<script type="text/javascript">
+
+	$(document).ready(function() {
+	$urlLogin = 		"localhost:8080/api/authenticate";
+	$inputEmail = 		"";	
+	$inputPassword = 	"";
+	
+
+
+		$('#login').click(function() {
+			$inputEmail = 		$("#email").val();	
+			$inputPassword = 	$("#password").val();
+			
+			$.ajax({
+				url:$urlLogin,
+				headers:{'Content-Type':'application/json'},
+				dataType:"json",
+				data:{email:$inputEmail, password:$inputPassword},
+				success:function(data) {
+
+					console.log(data);
+				},
+				error:function(){
+
+				},
+			})
+		});
+	});
+</script>
+<body>
+	<div id="input-info">
+		<div class="col-xs-3 col-xs-offset-4 text-center">
+			<label for="email">Email:</label>
+			<input id="email" type="email" name="email"  class="form-control">
+		</div>
+		<div class="col-xs-3 col-xs-offset-4 text-center">
+			<label for="password">Password:</label>
+			<input id="password" type="password" name="password" class="form-control">
+		</div>
+		<br/>		
+		
+	</div>
+	</br></br></br></br></br></br>
+	<div class="col-xs-3 col-xs-offset-4 text-center">
+			<div class="btn btn-info" id="login">Log in</div>
+		</div>
+
+</body>
+</html>

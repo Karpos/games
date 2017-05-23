@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Game;
 use App\Score;
 use App\State;
 use App\u_plays_on;
@@ -14,6 +15,9 @@ class GameController extends Controller
     public function __construct(){
 
         $this->middleware('jwt.auth');
+    }
+    public function getGames(){
+        return Game::all()->toJson();
     }
     public function userSave(Request $request){
  /*       {

@@ -5,7 +5,10 @@
 		
 	</title>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-		<script type="text/javascript" src="../jquery.min.js"></script>
+        <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<style type="text/css">
 			#input-info{
@@ -16,7 +19,8 @@
 <script type="text/javascript">
 
 	$(document).ready(function() {
-	$urlLogin = 		"https://gamesphp.herokuapp.com/api/authenticate";
+	$urlLogin = 		"http://localhost:8080/api/authenticate";
+    $urlGames = 		"http://localhost:8080/games";
 	$inputEmail = 		"";	
 	$inputPassword = 	"";
 	
@@ -25,18 +29,37 @@
 		$('#login').click(function() {
 			$inputEmail = 		$("#email").val();	
 			$inputPassword = 	$("#password").val();
-			
+            $token =            "";
 			$.ajax({
+				type:'POST',
 				url:$urlLogin,
-				headers:{'Content-Type':'application/json'},
-				dataType:"json",
-				data:{email:$inputEmail, password:$inputPassword},
-				success:function(data) {
+                dataType:'json',
+				data: {'email': $inputEmail, 'password': $inputPassword},
 
-					console.log(data);
+				success:function(data,textStatus,jqXHR) {
+				    $token = data.token;
+                    localStorage.setItem("token",$token);
+                    //console.log(location.protocol+"//" + location.host + "/games");
+                    location.href = location.protocol+"//" + location.host + "/games?token="+$token;
+                  /*  $.ajax({
+                        type:'GET',
+                        url:$urlGames + '?token='+$token,
+                        headers:{
+                            'Authorization':'Bearer ' + $token
+                        },
+                        success:function (data) {
+                            console.log('worked');
+                        },
+                        error:function (jqXHR, textStatus, errorThrown) {
+                            console.log(textStatus);
+                            console.log(jqXHR.status);
+                            console.log(jqXHR);
+                        }
+                    });*/
 				},
-				error:function(){
-
+				error:function(jqXHR, textStatus, errorThrown){
+                    //console.log('stastus' + jqXHR.status);
+                    console.log(jqXHR.responseText);
 				},
 			})
 		});

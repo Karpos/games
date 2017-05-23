@@ -54,3 +54,8 @@ Route::post('scores',[
     'uses' => 'ScoreController@scores',
     'as' =>  'score.scores',
 ]);
+Route::post('games',[
+    'middleware' => ['api', 'cors'],
+    'uses' => 'GameController@getGames',
+    'as' =>  'games',
+]);
